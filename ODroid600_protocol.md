@@ -1,4 +1,5 @@
-*ODroid600 experiment protocol*		date:
+# ODroid600 experiment protocol
+date:
 purpose:
 
 1. Create overnight bacterial culture
@@ -18,6 +19,7 @@ vortex to resuspend pellet
 get OD of the sample and adjust to OD = ____
 
 4. Inoculate the 5 mL of media with 16.67 uL (3.33 uL per mL media)  bacterial suspension and place the tubes in the respective holders in the ODroid600
+
 Tube information:
 Channel A:___________________________________________________     
 Channel B:___________________________________________________
