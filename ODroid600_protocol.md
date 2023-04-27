@@ -39,7 +39,8 @@ Channel B:___________________________________________________
 Channel C:___________________________________________________
 
 Channel D:___________________________________________________
-Incubator temp:	Incubator rpm:
+
+Incubator temp:       Incubator rpm:
 
 5. Turn on the ODroid600 by plugging it into a power source. (Make sure the memory card is in the memory card slot)
 
