@@ -2,7 +2,7 @@
 
 
 ## Citation management with Zotero
-Zotero is n open source citation management software.
+Zotero is an open source citation management software.
 You can get add-ons for browsers such as Chrome and mobile devices (iOS and Android) that enable you to save citations while seaching the web.
 There are also plugins for document editing software (Word, Google Docs, text editors such as Atom) that enable you to insert citations into manuscripts easily.
 
@@ -54,7 +54,7 @@ to set up rclone for a a desired cloud service use (or to regenerate an expired 
 ``` rclone config ```
 
 to make a brand new box file with the specified name
-``` rclone copy --create-empty-src-dirs -P /home/tslaird/leveau_lab box_ucdavis:leveau_lab_04212022/ ```
+``` rclone copy --create-empty-src-dirs -P /local/directory remote:new_directory/ ```
 
 to list all the files of a specific remote path:
 ```rclone ls remote:path```
