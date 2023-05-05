@@ -34,6 +34,7 @@ return result
 ```
 3) make sure the run as asynch function checkbox is selected and click the Run button
 
+Also see (https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing) for more possibiliies with the JavaScript API for Zotero
 
 #### postscript for BBT keeping italicized words the same case
 ```
