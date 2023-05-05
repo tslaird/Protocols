@@ -21,4 +21,6 @@ To create an environment from a yaml:
 ```conda env create -f env.yml```
 
 To remove an environment:
-```conda env remove --name env_name_goes_here```
+```conda env remove --name {environment_name}```
+
+Note: The brackets { } simply represent a placeholder and should not be typed when executing a particular command
