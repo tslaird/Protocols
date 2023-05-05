@@ -18,6 +18,7 @@ if (Translator.BetterBibLaTeX) {
   if (item.title) this.add({ name: 'title', value: item.title.replace(/<i>/g, '<i class="nocase">' )});
 }
 ```
+Note: Just make sure that your exported library matches the id given for the Translator.id value
 
 ### Saving and archiving with github and box
 
