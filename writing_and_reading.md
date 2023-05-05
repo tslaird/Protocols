@@ -12,6 +12,29 @@ The BBT plugin can also be used to automatically export a library each time the 
 
 Another good plugin is Zotfile which can change the file paths of the saved pdfs Zotero stores. Rather than saving them with non-identifiable names they can be saved using the author and title of the reference. (see:http://zotfile.com/)
 
+# Zotero javascript code for batch replacing text in title
+1) you must have the entries that you want to replace text in selected (highlighted) in the Zotero GUI
+2) Go to Tools--> Developer--> Run JavaScript and paste the following script (modified from: https://forums.zotero.org/discussion/78501/possible-to-search-replace-a-character-in-all-titles) in the text box.
+Note: the below example is for italicizing a Genus and species name in the title field of a Zotero entry but can be modified for different circumstances
+```
+zoteroPane = Zotero.getActiveZoteroPane();
+items = zoteroPane.getSelectedItems();
+var result = "";
+var oldValue = " Acinetobacter baumannii ";
+var newValue = " <i>Acinetobacter baumannii</i> ";
+for (item of items) {
+    var title = item.getField('title');
+    result += "   " + title + "\n";
+    var new_title = title.replace(oldValue, newValue);
+    result += "-> " + new_title + "\n\n";
+    item.setField('title', new_title);
+    await item.saveTx();
+}
+return result
+```
+3) make sure the run as asynch function checkbox is selected and click the Run button
+
+
 # postscript for BBT keeping italicized words the same case
 ```
 if (Translator.BetterBibLaTeX) {
