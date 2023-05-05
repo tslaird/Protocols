@@ -12,6 +12,13 @@ The BBT plugin can also be used to automatically export a library each time the 
 
 Another good plugin is Zotfile which can change the file paths of the saved pdfs Zotero stores. Rather than saving them with non-identifiable names they can be saved using the author and title of the reference. (see:http://zotfile.com/)
 
+# postscript for BBT keeping italicized words the same case
+```
+if (Translator.BetterBibLaTeX) {
+  if (item.title) this.add({ name: 'title', value: item.title.replace(/<i>/g, '<i class="nocase">' )});
+}
+```
+
 ### Saving and archiving with github and box
 
 #### common git commands
