@@ -36,6 +36,29 @@ return result
 
 Also see (https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing) for more possibiliies with the JavaScript API for Zotero
 
+```
+zoteroPane = Zotero.getActiveZoteroPane();
+items = zoteroPane.getSelectedItems();
+var dict = [
+    [/(^|\s)Galleria mellonella(\s|$)/g, " <i>Galleria mellonella</i> "],
+    [/(^|\s)Acinetobacter lactucae(\s|$)/g, " <i>Acinetobacter lactucae</i> "]
+];
+var result = "";
+dict.forEach(function(entry){
+    var key = entry[0];
+    var value = entry[1];
+    for (item of items) {
+        var title = item.getField('title');
+        result += "   " + title + "\n";
+        var new_title = title.replace(key, value);
+        result += "-> " + new_title + "\n\n";
+        item.setField('title', new_title);
+        item.saveTx();
+    }
+})
+return result
+```
+
 #### postscript for BBT keeping italicized words the same case
 ```
 if (Translator.BetterBibLaTeX) {
