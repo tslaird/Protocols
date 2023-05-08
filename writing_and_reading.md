@@ -36,6 +36,8 @@ return result
 
 Also see (https://www.zotero.org/support/dev/client_coding/javascript_api#batch_editing) for more possibiliies with the JavaScript API for Zotero
 
+For a more robust script that can replace multiple things, see the script below:
+
 ```
 zoteroPane = Zotero.getActiveZoteroPane();
 items = zoteroPane.getSelectedItems();
