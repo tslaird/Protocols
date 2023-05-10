@@ -106,6 +106,11 @@ To do that follow the syntax below for the ```.gitignore``` file:
 
 Note files that are already tracked by Git are not affected by a gitignore file so it is best to create this file before working on your project.
 
+#### accidentaly pushing a large file
+
+https://github.com/newren/git-filter-repo
+
+path/to/git-filter-repo --invert-paths --path-match path_of_large_file
 
 ## Saving files using rclone
 
