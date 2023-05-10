@@ -84,7 +84,10 @@ Commit files:
 Push commits from the local repository to the remote repository
 ```git push -u origin master```
 
-
+To remove a file or folder from being tracked (but you don't want it deleted):
+```
+git rm -r --cached path_to_file
+```
 #### gitignore files
 
 I like to use this file to do the opposite of what is intended (i.e. to un-ignore files). To do that you have to first ignore all files and then un-ignore specific files of your choosing.
