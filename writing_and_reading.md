@@ -221,4 +221,11 @@ Additionally, in order to keep your Zotero library file continually updating you
 
 1. Numbered list item 1
 2. Numbered list item 2
+
+| Table_header1  | Table_header2 |
+| --- | --- |
+| A   | 1  |
+| B   | 2  |
+| C   | 3  |
+
 ```
