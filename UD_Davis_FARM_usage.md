@@ -34,9 +34,19 @@ You can do the reverse and transfer files to the FARM using a command like:
 
 *Note: The ```-e ssh``` flag in the command specifies that there will be an ssh connection initiated by rsync. Thus, the commands above are run from a terminal on your local machine. You do not need to be logged into the FARM to run these command.
 
+#### Setting up a reproducible computing environment on the FARM
 
+Install conda/mamba:
+```
+wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
+bash Miniforge3-Linux-x86_64.sh
+```
 
+Install some base packages
 
+```
+mamba install snakemake
+```
 
 #### Running commands on the FARM
 
