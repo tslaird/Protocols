@@ -40,12 +40,15 @@ Install conda/mamba:
 ```
 wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh"
 bash Miniforge3-Linux-x86_64.sh
+source ~/.bashrc
+conda install mamba
 ```
 
 Install some base packages
-
 ```
 mamba install snakemake
+mamba install scipy
+mamba install pandas
 ```
 
 #### Running commands on the FARM
