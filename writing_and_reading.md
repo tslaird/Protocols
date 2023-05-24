@@ -197,7 +197,11 @@ csl: path/to/reference_style.csl
 
 **Figure 1** Figure legend text goes here
 
+\newpage
+\singlespacing
+# References
 ```
+If you need to change the paragraph indent feature of particular sections you can add ```\setlength\parindent{0pt}``` before a particular section 
 
 Once you are done editing your markdown file you can "knit" it from the command line using the following command:
 ``` Rscript -e "rmarkdown::render('path/to/file.Rmd', output_format= 'all')" ```
