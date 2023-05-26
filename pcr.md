@@ -2,7 +2,7 @@
 
 1) Create master mix for 25 uL reaction volumes:
 
-Multiply each solution volume by the 1.2 plus the number of reactions to set up
+Multiply each solution volume by the number of reactions to set up plus 0.2
 
 * 12.5 uL GoTaq MasterMix
 * 1.5 uL Forward primer
