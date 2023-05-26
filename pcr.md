@@ -16,6 +16,7 @@ Multiply each solution volume by the 1.2 plus the number of reactions to set up
 For 16S gene sequencing use this protocol:
 
 * 94 degrees C - 5 min
+
 Repeat 29 times
   - 94 degrees C - 30 seconds
   - 53 degrees C - 30 seconds
