@@ -14,15 +14,15 @@ Multiply each solution volume by the 1.2 plus the number of reactions to set up
 3) Run the reactions in a thermocycler using an appropriate cycle protocol.
 
 For 16S gene sequencing use this protocol:
----
+
 * 94 degrees C - 5 min
----
+
 Repeat 29 times
----
+
 * 94 degrees C - 30 seconds
 * 53 degrees C - 30 seconds
 * 72 degrees C - 1 minute 30 seconds
 * 72 degrees C - 7 minutes
----
+
 * 4 degrees C - inf
----
+
