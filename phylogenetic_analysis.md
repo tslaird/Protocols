@@ -30,14 +30,14 @@ rule make_nexus:
         '''seqmagick convert --output-format nexus --alphabet protein {input} {output}
 
 rule build_fasttree:
-    input:"{protein}_seqs.trim.msa.fa"
-    output: "{protein}_seqs.trim.msa.fasttree.nwk"
+    input:"{protein}.trim.msa.fa"
+    output: "{protein}.trim.msa.fasttree.nwk"
     shell:
         '''FastTree {input} > {output} '''
 
 rule build_iqtree:
-    input:"{protein}_seqs.trim.msa.fa"
-    output: "{protein}_seqs.trim.msa.treefile"
+    input:"{protein}.trim.msa.fa"
+    output: "{protein}.trim.msa.treefile"
     shell:
         '''iqtree2 -s {input} --ufboot 1000 -alrt 1000 '''
 
