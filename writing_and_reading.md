@@ -167,22 +167,27 @@ author:
 - Author 1
 - Author 2
 output:
- #word_document:
- #reference_docx: ./style1.docx
+  word_document:
+    reference_docx: ./style1.docx
   pdf_document:
     fig_caption: yes
     keep_tex: yes
     latex_engine: pdflatex
- #html_document:
-    #df_print: paged
+  html_document:
+    df_print: paged
 mainfont: Georgia
 fontsize: 12pt
 geometry: margin = 1in
 header-includes:
 - \usepackage{setspace}\doublespacing
 - \setlength\parindent{24pt}
+- \DeclareUnicodeCharacter{03B1}{$\alpha$}
+- \DeclareUnicodeCharacter{03B2}{$\beta$}
+- \DeclareUnicodeCharacter{03B3}{$\gamma$}
 bibliography: /path/to/Zotero/library.bib
 csl: path/to/reference_style.csl
+urlcolor: blue
+
 ---
 \setcounter{page}{1}
 \newpage
@@ -192,10 +197,18 @@ csl: path/to/reference_style.csl
 
 # Results
 
+\setlength\parindent{24pt}
 \newpage
+
 ![](path/to/figure.png){ width=100% }
 
 **Figure 1** Figure legend text goes here
+
+\newpage
+
+![](path/to/figure.png){ width=100% }
+
+**Figure 2** Figure legend text goes here
 
 \newpage
 \singlespacing
