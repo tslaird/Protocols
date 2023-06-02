@@ -223,6 +223,12 @@ Note: by specifying ```output_format='all'``` then each output listed in the ```
 
 Additionally, in order to keep your Zotero library file continually updating you can use the BetterBibtex plugin mentioned above.
 
+### Rmarkdown tips and tricks
+* I have had trouble embedding long urls in Rmd files. If I embed the link and have the name match the link
+then the tag is specified as \url in the pdf file and links correctly but is displayed improperly encoded. However,
+if the two don't match then the \href tag is used in the .tex file and the link is truncated and non functional.
+To work around this bug I embed the link after shortening it with bit.ly and it is displayed and links properly.
+
 # Markdown cheatsheet
 
 ```
