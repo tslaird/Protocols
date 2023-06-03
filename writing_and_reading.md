@@ -155,7 +155,7 @@ rclone copy -v . box_ucdavis:ClusterSearch
 The following software (linked here: https://www.willus.com/k2pdfopt/
 ) may be beneficial if you want to read papers or books on a kindle instead of on the computer.
 
-# Writing a paper with markdown
+# Writing a paper with R markdown
 
 ### Markdown template
 
