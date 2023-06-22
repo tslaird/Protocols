@@ -181,6 +181,9 @@ geometry: margin = 1in
 header-includes:
 - \usepackage{setspace}\doublespacing
 - \setlength\parindent{24pt}
+- \usepackage{booktabs}
+- \usepackage{colortbl}
+- \usepackage{longtable}
 - \DeclareUnicodeCharacter{03B1}{$\alpha$}
 - \DeclareUnicodeCharacter{03B2}{$\beta$}
 - \DeclareUnicodeCharacter{03B3}{$\gamma$}
