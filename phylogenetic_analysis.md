@@ -27,7 +27,7 @@ rule make_nexus:
     input: "{protein}.trim.msa.fa"
     output: "{protein}.trim.msa.nex"
     shell:
-        '''seqmagick convert --output-format nexus --alphabet protein {input} {output}
+        '''seqmagick convert --output-format nexus --alphabet protein {input} {output}'''
 
 rule build_fasttree:
     input:"{protein}.trim.msa.fa"
