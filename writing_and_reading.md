@@ -214,17 +214,17 @@ urlcolor: blue
 **Figure 2** Figure legend text goes here
 
 \newpage
-
-```{r echo = F, results = 'asis', warning=FALSE,message=FALSE}
+<p>
+**Table 1** Table description goes here.
+</p>
+``````{r echo = F, results = 'asis', warning=FALSE,message=FALSE}
 library(dplyr)
 library(kableExtra)
 table<-read.csv("table.csv")
 knitr::kable(table, "latex", digits=3, booktabs = T,
           col.names = c("col1", "col2")) %>%
-kable_styling(latex_options = c("scale_down","striped") )
-```
-**Table 1** Table description goes here.
-
+kable_styling(latex_options = c("scale_down","striped","HOLD_position") ) #HOLD_position is needed to keep table legend above table
+``````
 
 \singlespacing
 # References
