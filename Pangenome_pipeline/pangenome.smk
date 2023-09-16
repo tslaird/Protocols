@@ -1,26 +1,42 @@
-
-THRESHOLDS=["0.2","0.3","0.4","0.5"]
+THRESHOLDS=["0.4","0.5"]
+INPUT_FASTA= "all_proteins.fasta"
 
 rule all_mmseqs:
     input:
         expand("resultsDB_clu-{identity}.tsv", identity=THRESHOLDS),
+        "master_DB",
+        expand("resultsDB_clu-{identity}.pangenome", identity=THRESHOLDS),
+        expand("fasttree-log-{identity}.txt", identity=THRESHOLDS),
+        expand("treecluster-log-{identity}.txt", identity=THRESHOLDS),
+        expand("resultsDB_phyloclu-{identity}.pangenome", identity=THRESHOLDS)
+
+rule make_mmseqs_db:
+    input: INPUT_FASTA
+    output: "master_DB"
+    shell:
+        '''
+        mmseqs createdb {input} {output}
+        '''
 
 rule run_mmseqs:
-    input: "combined_neighborhoods_20.fasta"
+    input: "master_DB"
     output:"resultsDB_clu-{identity}.tsv"
     shell:
         '''
-        mmseqs createdb {input} master_DB_20 &&
         mmseqs cluster -c 0.8 -e 0.001 --min-seq-id {wildcards.identity} --threads 4 -v 3 master_DB resultsDB_aln-{wildcards.identity} resultsDB_clu-{wildcards.identity} &&
         mmseqs createtsv master_DB master_DB resultsDB_aln-{wildcards.identity} resultsDB_clu-{wildcards.identity}.tsv
         '''
 
-rule parse_mmseqs_20:
+rule parse_mmseqs:
     input:
         tsv="resultsDB_clu-{identity}.tsv",
-        fasta = "all_proteins.fasta"
-    output:"resultsDB_clu-{identity}.pangenome"
+        fasta = INPUT_FASTA
+    output:
+        file="resultsDB_clu-{identity}.pangenome",
+        directory=directory("Cluster_seqs-{identity}/")
     run:
+        import pandas as pd
+        import time
         def jaccard(list1, list2):
             intersection = len(list(set(list1).intersection(list2)))
             union = (len(list1) + len(list2)) - intersection
@@ -61,8 +77,8 @@ rule parse_mmseqs_20:
         all_clusters =  list(range(0, max(all_cluster_df['cluster'])))
         print(all_genomes)
         #print(all_clusters)
-        if not os.path.exists("Cluster_seqs20/"):
-            os.mkdir("Cluster_seqs20/")
+        if not os.path.exists(output.directory):
+            os.mkdir(output.directory)
         def catalog_cluster(cluster):
             print(str(cluster)+'\n')
             time.sleep(0.001)
@@ -73,7 +89,7 @@ rule parse_mmseqs_20:
             genome_cluster_df=all_cluster_df[all_cluster_df['cluster']==cluster]
             #print(seqDICT)
             seqOUT = [">"+z+"\n"+seqDICT[">"+z] for z in genome_cluster_df['protein'] ]
-            with open("Cluster_seqs20/Cluster_"+str(cluster)+"_seqs.fasta",'w') as clustOUT:
+            with open(output.directory+"/Cluster_"+str(cluster)+"_seqs.fasta",'w') as clustOUT:
                 clustOUT.write("\n\n".join(seqOUT))
             for genome in all_genomes:
                 if genome in list(genome_cluster_df['name']):
@@ -99,38 +115,50 @@ rule parse_mmseqs_20:
         output_df=pd.DataFrame(result_list, columns= names)
         rowcount = (output_df.iloc[:,3:int((len(output_df.columns)-3)/2)] >0).sum(axis=1)
         output_df.insert(3, 'count', rowcount)
-        output_df.to_csv(str(output))
+        output_df.to_csv(str(output.file))
 
 
 #could be made better with snakemake
 rule fasttree_treecluster:
+    input: "Cluster_seqs-{identity}/"
+    output: "fasttree-log-{identity}.txt"
     shell:
         '''
-        for file in Cluster_seqs/*seqs.fasta;
+        for file in {input}/*seqs.fasta;
         do
             num=$(grep ">" $file | wc -l)
             if [[ $num > 1 ]]; then
                 muscle -in ${{file}} -out ${{file}}.msa && trimal -in ${{file}}.msa -automated1 > ${{file}}.trim.msa && fasttree ${{file}}.trim.msa > ${{file}}.trim.msa.fasttree.tree
             fi
         done
+        touch {output}
         '''
 
 rule filt_treecluster:
+    input:
+        A= "Cluster_seqs-{identity}/",
+        B= "fasttree-log-{identity}.txt"
     conda: "treecluster.yml"
+    output: "treecluster-log-{identity}.txt"
     shell:
         '''
-        for file in Cluster_seqs/*fasttree.tree;
+        for file in {input.A}*fasttree.tree;
         do
             TreeCluster.py -i ${{file}} -t 1 -o ${{file}}.1.treecluster --method length
             TreeCluster.py -i ${{file}} -t 0.9 -o ${{file}}.0.9.treecluster --method length
             TreeCluster.py -i ${{file}} -t 0.85 -o ${{file}}.0.85.treecluster --method length
             TreeCluster.py -i ${{file}} -t 0.7 -o ${{file}}.0.7.treecluster --method length
         done
+        touch {output}
         '''
 
 rule repartition_clusters:
+    input:
+        A= "Cluster_seqs-{identity}/",
+        B= "treecluster-log-{identity}.txt"
+    output: "repartition-log-{identity}.txt"
     run:
-        treeclust_files = glob.glob('Cluster_seqs/*0.7.treecluster')
+        treeclust_files = glob.glob(input.A+'/*0.7.treecluster')
         out_list =[]
         for f in treeclust_files:
             print("_".join(f.split("_")[0:2]))
@@ -145,14 +173,14 @@ rule repartition_clusters:
                 for j in clust_df['SequenceName']:
                     out_list.append([clust_rep,j ])
         new_clusters_df = pd.DataFrame(out_list)
-        new_clusters_df.to_csv('resultsDB_phyloclu-0.2.tsv', header=False, index=False, sep = '\t')
+        new_clusters_df.to_csv('resultsDB_phyloclu-{identity}.tsv', header=False, index=False, sep = '\t')
 
 
 rule parse_mmseqs_phyloclust:
     input:
-        tsv="resultsDB_phyloclu-0.2.tsv",
-        fasta = "all_proteins.fasta"
-    output:"resultsDB_phyloclu-0.2.pangenome"
+        tsv="resultsDB_phyloclu-{identity}.tsv",
+        fasta = INPUT_FASTA
+    output:"resultsDB_phyloclu-{identity}.pangenome"
     run:
         def jaccard(list1, list2):
             intersection = len(list(set(list1).intersection(list2)))
@@ -196,8 +224,8 @@ rule parse_mmseqs_phyloclust:
         all_clusters =  list(range(0, max(all_cluster_df['cluster'])))
         print(all_genomes)
         #print(all_clusters)
-        if not os.path.exists("PhyloCluster_seqs20/"):
-            os.mkdir("PhyloCluster_seqs20/")
+        if not os.path.exists("PhyloCluster_seqs/"):
+            os.mkdir("PhyloCluster_seqs/")
         def catalog_cluster(cluster):
             print(str(cluster)+'\n')
             #time.sleep(0.001)
@@ -208,7 +236,7 @@ rule parse_mmseqs_phyloclust:
             genome_cluster_df=all_cluster_df[all_cluster_df['cluster']==cluster]
             #print(seqDICT)
             seqOUT = [">"+z+"\n"+seqDICT[">"+z] for z in genome_cluster_df['protein'] ]
-            with open("PhyloCluster_seqs20/Cluster_"+str(cluster)+"_seqs.fasta",'w') as clustOUT:
+            with open("PhyloCluster_seqs/Cluster_"+str(cluster)+"_seqs.fasta",'w') as clustOUT:
                 clustOUT.write("\n\n".join(seqOUT))
             for genome in all_genomes:
                 if genome in list(set(all_cluster_df['unique_id'])):
@@ -239,14 +267,14 @@ rule parse_mmseqs_phyloclust:
         output_df.insert(3, 'count', rowcount)
         output_df.to_csv(str(output))
 
-rule edit_clustseq:
-    input: directory("Cluster_seqs")
-    threads:1
-    shell:
-        '''
-        for f in Cluster_seqs/*_seqs.fasta;
-        do
-            base=$(basename "$f" "_seqs.fasta")
-            sed "s/>/>$base\!\!/g" $f > "Cluster_seqs/${{base}}.fa"
-        done
-        '''
+# rule edit_clustseq:
+#     input: directory("Cluster_seqs")
+#     threads:1
+#     shell:
+#         '''
+#         for f in Cluster_seqs/*_seqs.fasta;
+#         do
+#             base=$(basename "$f" "_seqs.fasta")
+#             sed "s/>/>$base\!\!/g" $f > "Cluster_seqs/${{base}}.fa"
+#         done
+#         '''
