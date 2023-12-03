@@ -267,3 +267,18 @@ To work around this bug I embed the link after shortening it with bit.ly and it 
 | C   | 3  |
 
 ```
+
+
+## Image manipulation
+
+This shell script will trim the borders of all images with a certain extension in a folder using imagemagick:
+```
+for f in *.png; do convert "${f}" -trim ${f%.png}_trim.png; done
+```
+
+This script will reduce the filesize of all images with a certain extension in a folder using imagemagick
+```
+for f in *.png; do convert "${f}" -resize 40%  ${f%.png}_trim.png; done
+```
+
+
