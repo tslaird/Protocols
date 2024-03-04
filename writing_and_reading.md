@@ -106,11 +106,21 @@ To do that follow the syntax below for the ```.gitignore``` file:
 
 Note files that are already tracked by Git are not affected by a gitignore file so it is best to create this file before working on your project.
 
-#### accidentaly pushing a large file
+#### accidentaly pushing a large file that won't sync with github
 
+you can use this tool to rewrite the history:
 https://github.com/newren/git-filter-repo
 
+here is the command:
+```
 path/to/git-filter-repo --invert-paths --path-match path_of_large_file
+```
+you will then likely have to re-link the local repository to the remote using the following commands:
+```
+git remote add origin https://path/to/github_repo.git
+git push -f -u origin master
+
+```
 
 ## Saving files using rclone
 
