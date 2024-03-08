@@ -61,6 +61,35 @@ dict.forEach(function(entry){
 return result
 ```
 
+Here is another potential script:
+```
+zoteroPane = Zotero.getActiveZoteroPane();
+items = zoteroPane.getSelectedItems();
+var result = "";
+var oldValues = [
+"Pseudomonas savastanoi",
+"Acinetobacter baumannii",
+"Enterobacter soli", 
+"Bradyrhizobium japonicum"];
+
+for (item of items) {
+    var title = item.getField('title');
+    result += "   " + title + "\n";
+    
+    // Iterate over each oldValue and replace it with <i>oldValue</i>
+    oldValues.forEach(function(oldValue) {
+        var regex = new RegExp("(^|[^<i>])" + oldValue + "($|[^</i>])", "g");
+        title = title.replace(regex, "$1<i>" + oldValue + "</i>$2");
+    });
+
+    result += "-> " + title + "\n\n";
+    item.setField('title', title);
+    await item.saveTx();
+}
+
+return result;
+```
+
 #### postscript for BBT keeping italicized words the same case
 ```
 if (Translator.BetterBibLaTeX) {
