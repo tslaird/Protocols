@@ -107,6 +107,9 @@ Initialize a new repository:
 Add files to the next commit:
 ```git add```
 
+If it is the first time using git on a specific machine you need to set the email using ```git config --global user.email {email.goes.here}``` 
+This can be set to the a private address via github (see: https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
+
 Commit files:
 ```git commit -m "descriptive message goes here"```
 
