@@ -110,6 +110,10 @@ Add files to the next commit:
 If it is the first time using git on a specific machine you need to set the email using ```git config --global user.email {email.goes.here}``` 
 This can be set to the a private address via github (see: https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
 
+Also when initially setting up a repo locally to link remotely you can use the github command line interfacte (gh CLI). This can be installed using conda if you have the conda-forge source: ```conda create -n gh gh```
+
+Then you will need to authenticate using ```gh auth login``` following the steps and making a token through the github profile website (https://github.com/settings/tokens)
+
 Commit files:
 ```git commit -m "descriptive message goes here"```
 
