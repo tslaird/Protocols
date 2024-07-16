@@ -29,3 +29,8 @@ cp -p /etc/passwd /etc/passwd.bkp
 #then change the userid
 usermod -u <new.UID> <username> 
 ```
+
+```
+#view the auth log
+sudo cat /var/log/auth.log
+```
