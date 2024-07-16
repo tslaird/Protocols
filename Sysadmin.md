@@ -20,3 +20,12 @@ sudo passwd <userid>
 # change the ownership of a directory
 sudo chown -R newuser:newgroup <directory>
 ```
+```
+#change a users UID (use sudo below if needed)
+#first make sure they don't have processes running and if they do run:
+pkill -U <UID/username>
+#then backup the passwd file just in case something goes wrong
+cp -p /etc/passwd /etc/passwd.bkp
+#then change the userid
+usermod -u <new.UID> <username> 
+```
