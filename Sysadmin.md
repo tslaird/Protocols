@@ -8,5 +8,7 @@ cat /etc/passwd
 cat /etc/group
 # change a users password
 sudo passwd <userid>
+# change the ownership of a directory
+sudo chown -R newuser:newgroup <directory>
 
 ```
