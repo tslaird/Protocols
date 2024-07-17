@@ -17,8 +17,14 @@ cat /etc/group
 sudo passwd <userid>
 ```
 ```
+# see the permissions and ownership of files or directories
+ls -l
 # change the ownership of a directory
 sudo chown -R newuser:newgroup <directory>
+# change the permisions of a file/directory
+chmod ugo+wrx <file or directory>
+# using octal signatures (see: https://chmod-calculator.com/)
+chmod 777 <file or directory>
 ```
 ```
 #change a users UID (use sudo below if needed)
