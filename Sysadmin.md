@@ -40,3 +40,7 @@ usermod -u <new.UID> <username>
 #view the auth log
 sudo cat /var/log/auth.log
 ```
+
+## Login shells
+shell parameters can be edited in the ```/etc/profile``` or a user specific ```~/.bashrc```
+
