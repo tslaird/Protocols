@@ -19,3 +19,4 @@ Per ncbi you can use these flags:
 –r recursive copy
 –i <private key file>
 
+### Also see (https://ena-docs.readthedocs.io/en/latest/retrieval/file-download.html#using-globus)
